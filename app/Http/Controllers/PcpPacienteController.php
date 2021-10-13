@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\PcpPaciente;
 use Illuminate\Http\Request;
+use DB;
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Storage;
 
@@ -88,18 +90,33 @@ class PcpPacienteController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $datosPcpPaciente = request()->except(['_token','_method']);
+        /*$datosPcpPaciente = DB::table('pcp_pacientes')
+        ->where('id', $request->id)
+        ->update
+        ([
+            "pcp_foto" => $request->pcp_foto,
+            "pcp_rut" => $request->pcp_rut,
+            "pcp_cuenta_corriente" => $request->pcp_cuenta_corriente,
+            "pcp_nombre" => $request->pcp_nombre,
+            "pcp_primer_apellido" =>  $request->pcp_primer_apellido,
+            "pcp_segundo_apellido" => $request->pcp_segundo_apellido
+        ]);*/
+       
+       $datosPcpPaciente = request()->except(['_token','_method','updated_at']);
 
         if($request->hasFile('pcp_foto'))
         {
             $pcp_paciente=PcpPaciente::findOrFail($id);
+            //->where(id, $id)
             Storage::delete('public/'.$pcp_paciente->pcp_foto);
             $datosPcpPaciente['pcp_foto']=$request->file('pcp_foto')->store('uploads','public');
         }
 
         PcpPaciente::where('id','=', $id)->update($datosPcpPaciente);
-        $pcp_paciente=PcpPaciente::findOrFail($id);        
+        $pcp_paciente=PcpPaciente::findOrFail($id);
+
         return view('paciente.edit', compact('pcp_paciente'));
+       
     }
 
     /**

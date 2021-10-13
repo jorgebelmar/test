@@ -21,10 +21,11 @@
     </div>
     <div class="form-floating">
 
-        <label for="Foto">Foto</label>
+        <label for="Foto">Foto</label><br>
         @if(isset($pcp_paciente->pcp_foto))
-        {{ $pcp_paciente->pcp_foto }}
+        <!--{{ $pcp_paciente->pcp_foto }}-->
         <img src=" {{ asset('storage').'/'.$pcp_paciente->pcp_foto }}" width="100" alt="">
+        <br>
         @endif
         <input type="file" class="form-control" id="pcp_foto" value="" name="pcp_foto">
     </div>
