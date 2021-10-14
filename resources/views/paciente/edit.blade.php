@@ -1,7 +1,12 @@
-editar
+@extends('layouts.app')
+@section('content')
+<div class="container">
+
 <form action="{{ url('/paciente/'.$pcp_paciente->id) }}" method="POST" enctype="multipart/form-data">
 @csrf
 {{ method_field('PATCH') }}
-@include('paciente.form')
+@include('paciente.form', ['modo'=>'Editar'])
 
 </form>
+</div>
+@endsection

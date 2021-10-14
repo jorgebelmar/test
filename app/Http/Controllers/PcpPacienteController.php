@@ -43,6 +43,27 @@ class PcpPacienteController extends Controller
     public function store(Request $request)
     {
         //
+
+        $campos=
+        [
+            'pcp_foto'=>'required|max:10000|mimes:jpeg,png,jpg',
+            'pcp_rut'=>'required|int',
+            'pcp_nombre'=>'required|string|max:100',
+            'pcp_primer_apellido'=>'required|string|max:100',
+            'pcp_segundo_apellido'=>'required|string|max:100'
+        ];
+        $mensaje=
+        [
+            //'required'=>'El :attribute es requerido',
+            'pcp_foto.required'=>'La Foto es requerida',
+            'pcp_rut.required'=>'El RUT es requerido',
+            'pcp_nombre.required'=>'El Nombre es requerido',
+            'pcp_primer_apellido.required'=>'El Apellido Paterno es requerido',
+            'pcp_segundo_apellido.required'=>'El Apellido Materno es requerido'
+        ];
+
+        $this->validate($request, $campos, $mensaje);
+
         //$datosPcpPaciente = request()->all(); se obtiene toda la info, se almacena en la variable
         $datosPcpPaciente = request()->except('_token'); //se almacena en la variable toda la info excepto el token
         
@@ -53,7 +74,8 @@ class PcpPacienteController extends Controller
 
         PcpPaciente::insert($datosPcpPaciente);
         
-        return response()->json($datosPcpPaciente); //se muestra la info almacenada en la variable, por json
+        //return response()->json($datosPcpPaciente); //se muestra la info almacenada en la variable, por json
+        return redirect('paciente')->with('mensaje', 'Paciente agregado con éxito');
     }
 
     /**
@@ -91,12 +113,11 @@ class PcpPacienteController extends Controller
     {
         //
         /*$datosPcpPaciente = DB::table('pcp_pacientes')
-        ->where('id', $request->id)
+        ->where('pcp_cuenta_corriente', $request->pcp_cuenta_corriente)
         ->update
         ([
             "pcp_foto" => $request->pcp_foto,
             "pcp_rut" => $request->pcp_rut,
-            "pcp_cuenta_corriente" => $request->pcp_cuenta_corriente,
             "pcp_nombre" => $request->pcp_nombre,
             "pcp_primer_apellido" =>  $request->pcp_primer_apellido,
             "pcp_segundo_apellido" => $request->pcp_segundo_apellido
@@ -128,7 +149,14 @@ class PcpPacienteController extends Controller
     public function destroy($id)
     {
         //
-        PcpPaciente::destroy($id);
-        return redirect('paciente');
+        $pcp_paciente=PcpPaciente::findOrFail($id);
+
+        if(Storage::delete('public/'.$pcp_paciente->pcp_foto))
+        {
+            PcpPaciente::destroy($id);
+        }
+
+
+        return redirect('paciente')->with('mensaje', 'Paciente borrado');
     }
 }

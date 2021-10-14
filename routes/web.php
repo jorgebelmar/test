@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 /*Esta es una forma de llegar al la vista:
@@ -26,7 +26,17 @@ Route::get('/paciente', function () {
 /* Rutear una vista específica por medio del controlador, en este caso 'create':
 Route::get('paciente/create', [App\Http\Controllers\PcpPacienteController::class,'create']); */
 
-Route::resource('paciente', App\Http\Controllers\PcpPacienteController::class); /*Rutea todas las vistas por medio del controlador*/
+Route::resource('paciente', App\Http\Controllers\PcpPacienteController::class)/*Rutea todas las vistas por medio del controlador*/
+    ->middleware('auth'); /*indica que o si tiene que estar logeado*/ 
 
 /*Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');*/
+
+Auth::routes(['register'=>false,'reset'=>false]);
+
+Route::get('/home', [App\Http\Controllers\PcpPacienteController::class, 'index'])->name('home');
+
+Route::group(['middleware' => 'auth'], function()
+{
+    Route::get('/', [App\Http\Controllers\PcpPacienteController::class, 'index'])->name('home');
+});

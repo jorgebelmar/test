@@ -1,4 +1,12 @@
-soy el index
+@extends('layouts.app')
+@section('content')
+<div class="container">
+
+@if(Session::has('mensaje'))
+    {{ Session::get('mensaje' )}}
+@endif
+
+<a href="{{ url('paciente/create')}}" class="btn btn-success mb-4">Registrar nuevo empleado</a>
 <table class="table table-light">
    
     <thead class="thead-light">
@@ -17,25 +25,27 @@ soy el index
         @foreach ($pcp_pacientes as $pcp_paciente)
         <tr>
             <td>
-                <img src=" {{ asset('storage').'/'.$pcp_paciente->pcp_foto }}" alt="">
+                <img class="img-thumbnail img-fluid" src=" {{ asset('storage').'/'.$pcp_paciente->pcp_foto }}" width="100" alt="">
                 <!--{{ $pcp_paciente->pcp_foto }}-->
             </td>
             <td>{{ $pcp_paciente->pcp_rut }}</td>
-            <td>{{ $pcp_paciente->pcp_cuenta_corriente }}</td>
+            <td>{{ $pcp_paciente->id }}</td>
             <td>{{ $pcp_paciente->pcp_nombre }}</td>
             <td>{{ $pcp_paciente->pcp_primer_apellido }}</td>
             <td>{{ $pcp_paciente->pcp_segundo_apellido }}</td>      
             <td>
                 
-                <a href="{{ url('/paciente/'.$pcp_paciente->id.'/edit') }}">Editar</a>| 
+                <a href="{{ url('/paciente/'.$pcp_paciente->id.'/edit') }}" class="btn btn-warning">Editar</a> 
 
-                <form action=" {{ url('/paciente/'.$pcp_paciente->id) }}" method="POST">
+                <form action=" {{ url('/paciente/'.$pcp_paciente->id) }}" class="d-inline" method="POST">
                 @csrf
                 {{ method_field('DELETE') }}
-                <input type="submit" onclick="return confirm('¿Seguro de borrar?')" value="Borrar">
+                <input type="submit" onclick="return confirm('¿Seguro de borrar?')" value="Borrar" class="btn btn-danger">
                 </form>
             </td>
         </tr>
         @endforeach
     </tbody>
 </table>
+</div>
+@endsection
