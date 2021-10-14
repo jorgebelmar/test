@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\PcpPaciente;
-use Illuminate\Http\Request;
-use DB;
+use Illuminate\Http\Request; //recuperar datos de la vista
+
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Support\Facades\DB;
+use DataTables;
+
 
 class PcpPacienteController extends Controller
 {
@@ -19,8 +23,16 @@ class PcpPacienteController extends Controller
     public function index()
     {
         //
-        $datos['pcp_pacientes']=PcpPaciente::paginate(2);
+        $datos['pcp_pacientes']=PcpPaciente::paginate(10);
         return view('paciente.index', $datos);
+    }
+
+    public function pdf()
+    {
+        //
+        //$datos['pcp_pacientes']=PcpPaciente::paginate();
+        //return view('paciente.pdf');
+        return "hola mundo";
     }
 
     /**
@@ -47,7 +59,7 @@ class PcpPacienteController extends Controller
         $campos=
         [
             'pcp_foto'=>'required|max:10000|mimes:jpeg,png,jpg',
-            'pcp_rut'=>'required|int',
+            'pcp_rut'=>'required|int|unique:pcp_pacientes',
             'pcp_nombre'=>'required|string|max:100',
             'pcp_primer_apellido'=>'required|string|max:100',
             'pcp_segundo_apellido'=>'required|string|max:100'
@@ -115,7 +127,7 @@ class PcpPacienteController extends Controller
 
         $campos=
         [
-            'pcp_rut'=>'required|int|unique:pcp_pacientes',
+            'pcp_rut'=>'required|int',
             'pcp_nombre'=>'required|string|max:100',
             'pcp_primer_apellido'=>'required|string|max:100',
             'pcp_segundo_apellido'=>'required|string|max:100'

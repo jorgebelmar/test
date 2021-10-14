@@ -29,6 +29,9 @@ Route::get('paciente/create', [App\Http\Controllers\PcpPacienteController::class
 Route::resource('paciente', App\Http\Controllers\PcpPacienteController::class)/*Rutea todas las vistas por medio del controlador*/
     ->middleware('auth'); /*indica que o si tiene que estar logeado*/ 
 
+/*Route::get('paciente/pdf', [App\Http\Controllers\PcpPacienteController::class, 'pdf'])
+->name('paciente.pdf');*/
+
 /*Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');*/
 
