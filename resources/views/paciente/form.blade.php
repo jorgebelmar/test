@@ -24,7 +24,7 @@
     </div>
     <div class="form-floating">
         <label for="RUT">RUT</label>
-        <input type="number" class="form-control" id="pcp_rut" name="pcp_rut" value="{{ isset($pcp_paciente->pcp_rut)?$pcp_paciente->pcp_rut:'' }}" placeholder="RUT">
+        <input type="number" class="form-control" id="pcp_rut" name="pcp_rut" value="{{ isset($pcp_paciente->pcp_rut)?$pcp_paciente->pcp_rut:old('pcp_rut') }}" placeholder="RUT">
     <!--</div>
         <div class="form-floating">
         <label for="CuentaCorriente">Cuenta Corriente</label>
@@ -32,18 +32,17 @@
     </div>-->
     <div class="form-floating">
         <label for="Nombre">Nombre</label>
-        <input type="text" class="form-control" id="pcp_nombre" name="pcp_nombre" value="{{ isset($pcp_paciente->pcp_nombre)?$pcp_paciente->pcp_nombre:'' }}" placeholder="Nombre">
+        <input type="text" class="form-control" id="pcp_nombre" name="pcp_nombre" value="{{ isset($pcp_paciente->pcp_nombre)?$pcp_paciente->pcp_nombre:old('pcp_nombre') }}" placeholder="Nombre">
     </div>
     <div class="form-floating">
         <label for=">PrimerApellido">Primer Apellido</label>
-        <input type="text" class="form-control" id="pcp_primer_apellido" name="pcp_primer_apellido" value="{{ isset($pcp_paciente->pcp_primer_apellido)?$pcp_paciente->pcp_primer_apellido:'' }}" placeholder="Primer Apellido">
+        <input type="text" class="form-control" id="pcp_primer_apellido" name="pcp_primer_apellido" value="{{ isset($pcp_paciente->pcp_primer_apellido)?$pcp_paciente->pcp_primer_apellido:old('pcp_primer_apellido') }}" placeholder="Primer Apellido">
     </div>
     <div class="form-floating">
         <label for="SegundoApellido">Segundo Apellido</label>
-        <input type="text" class="form-control" id="pcp_segundo_apellido" name="pcp_segundo_apellido" value="{{ isset($pcp_paciente->pcp_segundo_apellido)?$pcp_paciente->pcp_segundo_apellido:'' }}" placeholder="Segundo Apellido">
+        <input type="text" class="form-control" id="pcp_segundo_apellido" name="pcp_segundo_apellido" value="{{ isset($pcp_paciente->pcp_segundo_apellido)?$pcp_paciente->pcp_segundo_apellido:old('pcp_segundo_apellido') }}" placeholder="Segundo Apellido">
     </div>
     <div class="form-floating mt-4">
-        <button type="submit" class="btn btn-success" id="enviar">{{ $modo }} Datos</button>
+        <button type="submit" class="btn btn-success btn-enviar" id="enviar">{{ $modo }} Datos</button>
         <a class="btn btn-primary" href="{{ url('paciente/')}}">Regresar</a>
     </div>
-   

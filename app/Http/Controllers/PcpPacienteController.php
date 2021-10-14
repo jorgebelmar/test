@@ -19,7 +19,7 @@ class PcpPacienteController extends Controller
     public function index()
     {
         //
-        $datos['pcp_pacientes']=PcpPaciente::paginate(5);
+        $datos['pcp_pacientes']=PcpPaciente::paginate(2);
         return view('paciente.index', $datos);
     }
 
@@ -76,6 +76,7 @@ class PcpPacienteController extends Controller
         
         //return response()->json($datosPcpPaciente); //se muestra la info almacenada en la variable, por json
         return redirect('paciente')->with('mensaje', 'Paciente agregado con éxito');
+        //return response()->json(['mensaje'=>'Paciente agregrado con éxito']);
     }
 
     /**
@@ -111,6 +112,31 @@ class PcpPacienteController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $campos=
+        [
+            'pcp_rut'=>'required|int|unique:pcp_pacientes',
+            'pcp_nombre'=>'required|string|max:100',
+            'pcp_primer_apellido'=>'required|string|max:100',
+            'pcp_segundo_apellido'=>'required|string|max:100'
+        ];
+        $mensaje=
+        [
+            //'required'=>'El :attribute es requerido',
+            'pcp_rut.required'=>'El RUT es requerido',
+            'pcp_nombre.required'=>'El Nombre es requerido',
+            'pcp_primer_apellido.required'=>'El Apellido Paterno es requerido',
+            'pcp_segundo_apellido.required'=>'El Apellido Materno es requerido'
+        ];
+
+         if($request->hasFile('pcp_foto'))
+         {
+            $campos=['pcp_foto'=>'required|max:10000|mimes:jpeg,png,jpg'];
+            $mensaje=['pcp_foto.required'=>'La Foto es requerida'];
+         }
+
+        $this->validate($request, $campos, $mensaje);
+
         //
         /*$datosPcpPaciente = DB::table('pcp_pacientes')
         ->where('pcp_cuenta_corriente', $request->pcp_cuenta_corriente)
@@ -136,7 +162,8 @@ class PcpPacienteController extends Controller
         PcpPaciente::where('id','=', $id)->update($datosPcpPaciente);
         $pcp_paciente=PcpPaciente::findOrFail($id);
 
-        return view('paciente.edit', compact('pcp_paciente'));
+        //return view('paciente.edit', compact('pcp_paciente'));
+        return redirect('paciente')->with('mensaje', 'Paciente Modificado');
        
     }
 
@@ -157,6 +184,6 @@ class PcpPacienteController extends Controller
         }
 
 
-        return redirect('paciente')->with('mensaje', 'Paciente borrado');
+        return redirect('paciente')->with('mensaje', 'Paciente Borrado');
     }
 }
