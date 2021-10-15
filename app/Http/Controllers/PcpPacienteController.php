@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\DB;
 use DataTables;
+use Illuminate\View;
+use PDF;
+use Dompdf\Options;
 
 
 class PcpPacienteController extends Controller
@@ -30,9 +33,11 @@ class PcpPacienteController extends Controller
     public function pdf()
     {
         //
-        //$datos['pcp_pacientes']=PcpPaciente::paginate();
-        //return view('paciente.pdf');
-        return "hola mundo";
+        $datos['pcp_pacientes']=PcpPaciente::paginate();
+
+        $pdf = PDF::loadView('paciente.pdf', $datos);
+        //return $pdf->stream(); //para mostrar el pdf
+        return $pdf->download('_lista-pacientes-HHHA.pdf');
     }
 
     /**
