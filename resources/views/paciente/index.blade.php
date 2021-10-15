@@ -45,7 +45,7 @@
                                 <td>{{ $pcp_paciente->pcp_segundo_apellido }}</td>      
                                 <td>
                                     
-                                    <a href="{{ url('/paciente/'.$pcp_paciente->id.'/edit') }}" class="btn btn-warning">Editar</a> 
+                                    <a href="{{ url('/paciente/'.$pcp_paciente->id.'/edit') }}" class="btn btn-success">Editar</a> 
 
                                     <form action=" {{ url('/paciente/'.$pcp_paciente->id) }}" class="d-inline" method="POST">
                                     @csrf

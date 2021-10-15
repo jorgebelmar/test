@@ -7,9 +7,9 @@
     <title>Document</title>
     <link href="{{ public_path('css/app.css') }}" rel=stylesheet type="text/css">
 </head>
-<body>
-    <h2>Listado de Pacientes</h2>
-    <table class="table table-light">    
+<body class="bg-light">
+    <h2 class="text-light bg-dark">Listado de Pacientes</h2>    
+    <table class="table table-light">
         <thead class="thead-light">
             <tr>
                 <th>Foto</th>
